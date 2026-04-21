@@ -22,16 +22,24 @@ Step 2: implement bubbleSort()
         You may shorten the range each time if you wish.
 */
 
-void swapInt(int arr[], int i, int j) {
-
+void swapInt(int arr[], int i, int j) { 
+        int temp = arr[i]; 
+        arr[i] = arr[j];
+        arr[j] = temp;  
 }
 
 void bubblePass(int arr[], int n) {
-
+                for (int j = 0; j < (n - 1); ++j){
+                        if (arr[j] > arr[j + 1]){
+                                swapInt(arr, j, (j + 1));
+                        }
+                }
 }
 
 void bubbleSort(int arr[], int n) {
-
+        for (int i = 0; i < n -1; ++i){
+                bubblePass(arr, n - i);
+        }
 }
 
 
@@ -55,11 +63,18 @@ Step 2: implement insertionSort()
 */
 
 void insertionStep(string arr[], int currentIndex) {
-
+        string key = arr[currentIndex];
+        int j = currentIndex - 1;
+        while(j >= 0 && arr[j] > key){
+                arr[j + 1] = arr[j];
+                j--;
+        }
+        arr[j + 1] = key;
 }
-
 void insertionSort(string arr[], int n) {
-
+        for (int i = 0; i < n; ++i){
+                insertionStep(arr, i);
+        }
 }
 
 
@@ -85,13 +100,24 @@ Step 3: Finally, use your two functions above to complete the following in newSo
 */
 
 void swap(double darray[], int index1, int index2) {
-
+        double temp = darray[index1];
+        darray[index1] = darray[index2];
+        darray[index2] = temp;
 }
 
 int minFind(double darray[], int n) {
-    return -1;
+        int current = 0;
+        for(int i = 0; i < n; ++i){
+                if(darray[i] < darray[current]){
+                        current = i;
+                }
+        }
+        return current;
 }
 
 void newSort(double darray[], int n) {
-
+        swap(darray, 0, minFind(darray, n)); //first element is sorted it is now the smallest
+        for (int i = 1; i < n; ++i) {
+                swap(darray, i, (minFind(darray + i, n - i) + i)); //start the array at where i is then make n smaller to reflect this smaller array size then add i back to the min to get the correct index
+        }    
 }
